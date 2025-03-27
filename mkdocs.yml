@@ -1,8 +1,8 @@
 site_name: NMCP Yemen Info System Docs
 # site_url: https://hamza-ye.github.io/mass-pro-docs/
 site_author: Hamza
-repo_name: MassPro-NMCPYE Docs
-repo_url: https://github.com/MassPro-NMCPYE/mass-pro-docs
+repo_name: NMCP-YE Datarun Docs
+repo_url: https://github.com/DataRun-ye/data-run-docs
 edit_uri: edit/main/docs/
 theme:
   # name: readthedocs
@@ -51,7 +51,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github-alt
-      link: https://github.com/orgs/MassPro-NMCPYE/discussions
+      link: https://github.com/orgs/DataRun-ye/discussions
 
 markdown_extensions:
   - tables
