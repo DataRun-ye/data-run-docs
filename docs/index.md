@@ -349,6 +349,11 @@ Supervisors can:
   - How it started.  
   - The team initially responsible.  
   - Any reassignment history (whether by date or between teams).  
+
+## 7. Use Case:
+- Routine Data for health facilities malaria cases, submitted or linked to external system such as `EIdews`.
+- ICCM data, routine data submission from community volunteers, supervision visit data...etc
+- Un-restricted other configurable use cases's workflows.
 ---
 
 ## 7. Implementation Roadmap
