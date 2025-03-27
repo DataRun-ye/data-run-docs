@@ -420,7 +420,7 @@ gantt
   ![Rules Expressions](https://github.com/user-attachments/assets/b49f0ccb-afea-4237-b1f1-b818e083a755)
 
 ## 9.2 Mobile App
-Datarun-Mobile's app is developed with dart (Flutter). The app facilitates the submission and synchronization of malaria-related data with the
+Datarun-Mobile's app was developed with dart (Flutter). The app facilitates the submission and synchronization of malaria-related data with the
 main backend system.
 
 ## Features
