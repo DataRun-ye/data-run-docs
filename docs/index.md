@@ -52,35 +52,8 @@ DataRun is a dynamic, modular data management system tailored to the NMCP’s ne
   - Employs an audit service to log and monitor all user interactions.
 
 **Architecture Diagram:**
+![001-High-Level System Architecture](<screenshots/001-High-Level System Architecture-adaptive-adaptive.svg>)
 
-```mermaid
-flowchart TD
-    subgraph Mobile App
-        MA[Mobile Client] -->|HTTPS| API
-        MA -->|Offline Sync| LS[(SQLite\nEncrypted)]
-        LS -->|AES-256| MA
-    end
-
-    subgraph Backend
-        API[Spring Boot API] --> PG[(PostgreSQL\nMetadata)]
-        API --> MG[(MongoDB\nDynamic Data)]
-        API --> Cache[(Redis\nCaching)]
-        API --> Auth[Keycloak]
-    end
-
-    subgraph Integrations
-        API -->|ODK Format| KoBoToolbox
-        API -->|Analysis Format| AnalysisService
-        API -->|REST| PowerBI
-        API -->|Webhooks| Other/DHIS2..
-    end
-
-    subgraph Security
-        Auth -->|OAuth2| MA
-        TLS[TLS 1.3] --> API
-        Audit[Audit Service] --> PG
-    end
-```
 
 ### 2.3 System Objectives
 
@@ -141,30 +114,7 @@ DataRun is engineered to:
 
 ### 3.3 Data Flow
 
-```mermaid
-sequenceDiagram
-    participant Field Worker
-    participant Mobile App
-    participant API
-    participant PostgreSQL
-    participant MongoDB
-
-    Field Worker->>Mobile App: Collects data (offline)
-    Mobile App->>Mobile App: Encrypts with SQLCipher
-    loop Periodic Sync
-        Mobile App->>API: JWT Auth
-        API->>Keycloak: Validate Token
-        Mobile App->>API: Batch submissions
-        API->>MongoDB: Write submissions
-        API->>PostgreSQL: Update assignments
-        API-->>Mobile App: Sync confirmation
-    end
-
-    Supervisor->>API: GET /assignments
-    API->>PostgreSQL: Query teams
-    API->>MongoDB: Aggregate data
-    API-->>Supervisor: Combined JSON
-```
+![Data Flow](<screenshots/002-Data Flow Diagram.svg>)
 
 ---
 
@@ -245,35 +195,8 @@ flowchart TD
   - Comprehensive logging using PostgreSQL Audit Extensions for immutable record keeping.
 
 ### 5.2 Security Architecture
+![alt text](<screenshots/003-Security Architecture-adaptive.svg>)
 
-```mermaid
-flowchart LR
-    subgraph Data_Layer
-        PG[(PostgreSQL)] -->|TDE\nAES-256| DISK
-        MG[(MongoDB)] -->|Encrypted FS| DISK
-    end
-
-    subgraph Network_Layer
-        WAF[Web Application Firewall] --> API
-        API -->|Mutual TLS| SERVICES
-    end
-
-    subgraph Access_Control
-        USER[Field Worker] -->|Biometric Auth| MA[Mobile]
-        MA -->|Cert Pinning| API
-        API --> RBAC[Role-Based Access]
-        RBAC --> POLICY["JSON Policy:
-            {
-              'malaria:write': ['team-leader'],
-              'itn:delete': ['admin']
-            }"]
-    end
-
-    subgraph Monitoring
-        AUDIT[Audit Logs] -->|PgAudit| PG
-        WAF -->|SIEM Integration| SPLUNK
-    end
-```
 
 **Compliance Standards:**
 
@@ -385,39 +308,46 @@ gantt
 ### 9.1.1 Activities and User Management
 
 - **Activities Management:**  
-  ![Activity's Teams Management](https://github.com/user-attachments/assets/9baf66a4-988b-495f-a69f-6d96160fe55b)
+  ![Activity's Teams Management](screenshots/activities_management_screen.jpg)
 
 - **Teams Management:**  
-  ![Teams Management Screen](https://github.com/user-attachments/assets/0aded21b-09c4-4cc2-892b-7485032b5e59)
+  ![Teams Management Screen](screenshots/Activity_teams_management_screen.jpg)
 
 - **User Management:**  
-  ![User Management](https://github.com/user-attachments/assets/8ab94341-f13d-471a-89af-e7641f430d53)
+  ![User Management](screenshots/user_management.jpg)
 
 ### 9.1.2 Form Templates and Elements
 
 - **Data Elements Management:**  
-  ![Data Elements Management](https://github.com/user-attachments/assets/bf0529c4-aca1-4090-a365-fff7d06849f3)  
-  ![Data Elements Definitions](https://github.com/user-attachments/assets/4f15825b-a388-4477-873f-71afdac3af71)
+
+  | ![1](screenshots/data_element_1.jpg) | ![2](screenshots/data_element_2.jpg) |  |
+  | ----------------------- | ----------------------- |-------------------------|
+  | **Data Elements Management Screen** | **Data Element Definition Creation** |  |
 
 - **Options and OptionSets:**  
-  ![Options Management](https://github.com/user-attachments/assets/0453a54a-be2e-4c21-b578-61fdd45790ad)  
-  ![OptionSets Definitions](https://github.com/user-attachments/assets/4d0e80ab-850f-46ca-91a2-21582e5035b0)
+  
+  | ![Options Management](screenshots/Options_OptionSet_management_and_definitions_1.jpg) | ![OptionSets Definitions](screenshots/Options_OptionSet_management_and_definitions_2.jpg) |  |
+  | ----------------------- | ----------------------- |-------------------------|
+  | **Options Management Screen**  | **OptionSets Definition Creation** |  |
 
 ### 9.1.3 Form Template Builder
 
 - **Main Screen:**  
-  ![Form Template Builder Main Screen](https://github.com/user-attachments/assets/638e9ce4-09a1-4c02-8f74-35492a92dd4d)
+  ![Form Template Builder Main Screen](screenshots/form_templates_builder_main_screen.jpg)
 
 - **Template Management:**  
-  ![Form Template Management](https://github.com/user-attachments/assets/b76ba1da-23c0-4df8-ad9b-8856cf55b009)
+  ![Form Template Management](screenshots/form_templates_builder_form_template_definition_screen.jpg)
 
 - **Sections & Data Elements Selection:**  
-  ![Sections Management](https://github.com/user-attachments/assets/eef9a064-4180-4d37-aa54-7e246919c31b)  
-  ![Data Elements Selection](https://github.com/user-attachments/assets/9548c59e-f4a3-45db-9e4e-e197ecac6335)
+  
+  | ![Sections Management](screenshots/form_templates_builder_sections_management_definition.jpg)   | ![Data Elements Selection](screenshots/form_templates_builder_dataelements_selection.jpg) |  |
+  | ----------------------- | ----------------------- |-------------------------|
+  | **Sections Management** | **Data Elements Selection** |  |
 
 - **Rules and Expressions:**  
-  ![Rules Definition Screen](https://github.com/user-attachments/assets/aa602eb0-ea7e-4c21-a9de-8d1311209d4a)  
-  ![Rules Expressions](https://github.com/user-attachments/assets/b49f0ccb-afea-4237-b1f1-b818e083a755)
+ | ![Rules Definition Screen](screenshots/form_templates_builder_rules_definition_screen.jpg)    | ![Rules Expressions](screenshots/form_templates_builder_rules_expressions.jpg) |  |
+  | ----------------------- | ----------------------- |-------------------------|
+  | **Rules Definition Screen** | **Rules Expressions** |  |
 
 ## 9.2 Mobile App
 Datarun-Mobile's app was developed with dart (Flutter). The app facilitates the submission and synchronization of malaria-related data with the
