@@ -1,1009 +1,396 @@
-# DataRun System, NMCP Yemen
-
+# DataRun System  
+**National Malaria Control Program (NMCP), Yemen**  
+*Comprehensive Data Management Solution for Malaria Control Operations*
+## Executive Summary  
+DataRun is a purpose-built, modular data management platform designed to streamline NMCP's field operations, data collection, and intervention planning. Developed in-house with zero licensing costs, it offers full ownership, offline functionality, and seamless integration with existing health systems. Key benefits include enhanced data integrity, real-time decision-making tools, and adaptable workflows for malaria-specific campaigns.
 ## 1. Introduction
 
 ### 1.1 Purpose
 
-The purpose of this document is to provide a comprehensive overview of the DataRun, developed to manage activities and data for the National Malaria Control Program (NMCP). This document serves as a foundational reference for understanding its architecture, features, and functionalities. It is intended to facilitate the ongoing development, maintenance, and enhancement of DataRun, ensuring its effective implementation and integration with other health information systems.
+This document provides a comprehensive overview of the DataRun system, designed specifically for managing activities and data for the National Malaria Control Program (NMCP). It serves as a foundational reference for understanding the system’s architecture, features, and functionalities, and is intended to guide ongoing development, maintenance, and integration with other health information systems.
 
-### 1.2 Scope
+### 1.2 Scope  
+Covers system architecture, core features, security protocols, and strategic advantages. Designed to facilitate informed decisions on nationwide rollout and integration.  
 
-This document is intended to cover DataRun in its entirety, including its design, architecture, key features, data management, database schema, user management, interoperability, security, user interface, workflow management, implementation details, and future enhancements. It provides detailed descriptions, diagrams, and visual aids to help stakeholders understand DataRun's components and their interactions.
+**Resource Portal**:  
+Access live documentation, API guides, and updates at [https://docs.nmcpye.org](https://docs.nmcpye.org).
 
-*Note:* This site will serve as a centralized place where users can access up-to-date information, guides, and resources. This includes code snippets for interacting with the API; metadata descriptions; live integrations with other platforms and tools. It will evolve alongside DataRun, to ensure users can effectively leverage its capabilities. Stay tuned for regular updates as new features and improvements are added, visit [https://docs.nmcpye.org](https://docs.nmcpye.org).
+---
 
-### 1.3 Audience
+## 2. DataRun System Overview
 
-The intended audience for this document includes:
+### 2.1 Description & Value Proposition
 
-- **End Users**: For understanding DataRun and how to use it.
-- **Developers and Engineers**: For understanding the technical architecture and development requirements.
-- **Project Managers and Coordinators**: For planning and overseeing the DataRun's deployment and usage.
-- **Data Analysts and Researchers**: For utilizing the data collection and visualization tools.
-- **System Administrators**: For managing and maintaining the DataRun's infrastructure and security.
-- **Policy Makers and Stakeholders**: For evaluating the DataRun's effectiveness and integration with national health strategies.
+**What is DataRun?**  
+DataRun is a dynamic, modular data management system tailored to the NMCP’s needs. It supports field operations by dynamically configuring projects, activities, teams, assignments, and organizational units (including field warehouses). Its key value propositions include:
 
-## 2. DataRun Overview
+| **Feature**       | **Typical Systems**       | **DataRun**                  |  
+|--------------------|---------------------------|------------------------------|  
+| **Cost**           | $5k+/year subscriptions  | **Zero licensing fees**      |  
+| **Control**        | Vendor-locked            | Full NMCP ownership          |  
+| **Customization**  | Generic templates        | Malaria-optimized workflows  |  
+| **Data Hosting**   | Offshore servers         | On-premise/Yemeni cloud      |  
 
-### 2.1 DataRun Description
 
-DataRun is an advanced information system designed to address the dynamic needs of the program's operations. It is designed mainly to support field Activities and streamlinining their data submission. DataRun adopts a modular architecture, allowing for the dynamic configuration and management of Organisation Units, Warehouses, projects, activities, teams, and assignments And intended to seamlessly integrate with other systems for health surveillance, information management, and service delivery.
+### 2.2 High-Level Architecture
 
-**Modular and Scalable Architecture**
+**System Modules:**
 
-From its inception, DataRun was envisioned as a small but highly modular platform. This strategic decision allows us to build upon the core functionalities, enabling seamless integration of new features and capabilities as the program evolves. The modular design ensures that each component can operate independently while remaining interconnected, facilitating easy updates and expansions without disrupting existing operations.
+- **Mobile App:**  
+  - Provides offline data capture with encrypted local storage (SQLite with AES-256).
+  - Synchronizes data via HTTPS and supports real-time authentication using OAuth2.
 
-### 2.2 Key Features
-
-- **Modular Design**: DataRun's modular architecture separates activities, projects, teams, and assignments, promoting organization, scalability, and ease of future expansion.
-- **Dynamic Data Management and Data Forms Creation:** Efficiently handle all information related to malaria cases, treatment protocols, and program activities. DataRun also allows the creation and configuration of data forms tailored to specific activities, ensuring relevant and accurate data collection.
-- **Data Flow Management**: By specifying data entry and flow processes, DataRun enhances data integrity and traceability, critical for program monitoring and evaluation.
-- **Data Collection**: Mobile and web supporting online and offline data collection in remote areas without internet connectivity, with a synchronization mechanism to upload data once connectivity is restored.
-- **Data Visualization Tools**: Pivot tables, charts, and dashboards are included for effective data analysis and the generation of user-friendly reports to aid in decision-making.
-- **Interoperability And Flexible Integration:** With its Open Architecture (API) it can easily integrate with other systems and databases supporting data interoperability with other health intervention areas (Eg. disease surveillance systems), quick and easy integration with existing platforms and systems such as supply chain, HRMS, LMIS, and DHIS2, ODK, facilitating coordination at scale ensuring a holistic approach to the program management.
-
-**Future Growth**
-
-As we move forward, the DataRun's modular foundation will allow us to introduce new functionalities and adapt to emerging needs. Whether it's integrating advanced analytics, enhancing user interfaces, or incorporating new data sources, DataRun is built to grow and evolve alongside the National Malaria Program. Its modularity ensures that it will continue to meet the program's needs, providing a reliable and scalable solution for years to come.
-
-### 2.3 Objectives
-
-The primary objectives of the DataRun are:
-
-- **Enhance Data Management**: To improve the collection, processing, and storage of data related to NMCP activities.
-- **Support Decision-Making**: To provide tools and reports that aid in informed decision-making for malaria control and prevention efforts.
-- **Enable Field Data Collection**: To facilitate offline data collection in remote areas, ensuring comprehensive data capture regardless of internet connectivity.
-- **Ensure Data Integrity**: To maintain high standards of data integrity and traceability through structured data flow management processes.
-- **Enhance Intervention Planning**: Ability to reuse Activities data for planning and executing other activitiess leading to lower costs and lower turnaround time, leading to better estimation and planning.
-
-## 3. Setting Up the Development Environment
-
-This section provides a comprehensive guide to setting up the development environment for DataRun. The system comprises multiple repositories, each with specific dependencies and setup requirements. Follow the instructions below to get started.
-
-### 3.1 Prerequisites
-
-The build system will install automatically the recommended version of Node and npm.
-- **Git**: For cloning repositories.
-- **Docker**: For containerization.
-- **Java (JDK 17+)**: For running Spring Boot applications.
-- **Node.js (20.15)**: For the Angular front-end.
-- **Flutter and Dart SDKs (>=3.3.0)**: For developing the mobile application and the mobile SDK.
-
-### 3.2 Repository Setup
-
-1. **data-run-api (Spring Boot, PostgreSQL, MongoDB)**
-
-   - **Clone the Repository:**
-     ```bash
-     git clone https://github.com/MassPro-NMCPYE/data-run-api.git
-     cd data-run-api
-     ```
-   - **Configure Application Properties:**
-     Edit `src/main/resources/application-dev.yml` to match your database configurations:
-     ```yml
-     spring:
-        # Mongodb Configuration
-        data:            
-            mongodb:
-            uri: mongodb://localhost:27017/databaseName
-            auto-index-creation: true
-
-        # PostgreSQL Configuration
-        datasource:
-            url: jdbc:postgresql://localhost:5432/databaseName
-            username: dbUsername
-            password: dbPassword
-     ```
-   - **Run the Application:**
-     ```bash
-     ./mvnw
-     ``` 
-
-2. **data-run-front-end (Angular)**
-   - **Clone the Repository:**
-     ```bash
-     git clone https://github.com/MassPro-NMCPYE/data-run-front-end.git
-     cd data-run-front-end
-     ```
-   - **Install Dependencies:**
-     ```bash
-     npm install
-     ```
-   - **Configure API Endpoint:**
-     Edit the environment file (`webpack/environment.js`) to point to the API:
-     ```typescript
-     module.exports = {
-       I18N_HASH: 'generated_hash',
-       SERVER_API_URL: '',
-       __VERSION__: process.env.hasOwnProperty('APP_VERSION') ? process.env.APP_VERSION : 'DEV',
-       __DEBUG_INFO_ENABLED__: false,
-     };
-     ```
-   - **Run the Application:**
-     ```bash
-     ng serve
-     ```
-
-3. **data-run-mobile-sdk (Dart)**
-   - **Clone the Repository:**
-     ```bash
-     git clone https://github.com/MassPro-NMCPYE/data-run-mobile-sdk.git
-     cd data-run-mobile-sdk
-     ```
-   - **Install Dependencies:**
-     ```bash
-     dart pub get
-     ```
-4. **data-run-mobile-app (Flutter)**
-   - **Clone the Repository:**
-     ```bash
-     git clone https://github.com/MassPro-NMCPYE/data-run-mobile.git
-     cd data-run-mobile
-     ```
-   - **Install Dependencies:**
-     ```bash
-     flutter pub get
-     ```
-   - **Run the Application:**
-     ```bash
-     flutter run
-     ```
-   - **Configure API Endpoint:**
-     Update the API endpoint in your Dart SDK configuration file `lib/commons/constants.dart`:
-     ```dart
-     const String apiUrl = 'http://localhost:8080';
-
-5. **data-run-docs**
-   - **Clone the Repository:**
-     ```bash
-     git clone https://github.com/MassPro-NMCPYE/data-run-docs.git
-     cd data-run-docs
-     ```
-   - **Install MkDocs and mkdocs-materia:**
-     ```bash
-     pip install mkdocs
-     pip install mkdocs-materia
-     ```
-   - **Serve the Documentation:**
-     ```bash
-     mkdocs serve
-     ```
-
-### 3.4 Building for production
-
-#### 3.4.1 Packaging as jar
-
-To build the final jar and optimize the dataRunApi application for production, run:
-
-```
-./mvnw -Pprod clean verify
-```
-
-To ensure everything worked, run:
-
-```
-java -jar target/*.jar
-```
-
-#### 3.4.2 Packaging as war
-
-To package your application as a war in order to deploy it to an application server, run:
-
-```
-./mvnw -Pprod,war clean verify
-```
-
-### 3.5 Testing
-
-#### Spring Boot tests
-
-To launch your application's tests, run:
-
-```
-./mvnw verify
-```
-
-### 3.6 Using Docker to simplify development (optional)
-
-You can use Docker to improve your development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
-
-For example, to start a postgresql database in a docker container, run:
-
-```
-docker compose -f src/main/docker/postgresql.yml up -d
-```
-
-To stop it and remove the container, run:
-
-```
-docker compose -f src/main/docker/postgresql.yml down
-```
-
-to start a mongodb database in a docker container, run:
-
-```
-docker compose -f src/main/docker/mongodb.yml up -d
-```
-
-To stop it and remove the container, run:
-
-```
-docker compose -f src/main/docker/mongodb.yml down
-```
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-```
-npm run java:docker
-```
-
-Or build a arm64 docker image when using an arm64 processor os like MacOS with M1 processor family running:
-
-```
-npm run java:docker:arm64
-```
-
-Then run:
-
-```
-docker compose -f src/main/docker/app.yml up -d
-```
-
-### 3.7 Cloud Setup (Google Cloud)
-
-1. **Set Up Google Cloud Account:**
-   - Sign up for a Google Cloud account and create a new project.
-
-2. **Google Cloud SDK:**
-   - Install the Google Cloud SDK on your local machine.
-     ```bash
-     curl https://sdk.cloud.google.com | bash
-     exec -l $SHELL
-     gcloud init
-     ```
-
-3. **Set Up Kubernetes Cluster:**
-   - Create a Kubernetes cluster for container orchestration.
-     ```bash
-     gcloud container clusters create your-cluster-name
-     ```
-
-4. **Deploying Containers:**
-   - Build Docker images for your services and push them to Google Container Registry.
-     ```bash
-     docker build -t gcr.io/your-project-id/data-run-api .
-     docker push gcr.io/your-project-id/data-run-api
-     ```
-   - Deploy the images to your Kubernetes cluster using Kubernetes manifests.
-
-
-## Example Workflows Diagrams and Visuals
-
-**System Schema:**
-
-```mermaid
-erDiagram
-  Project ||--o{ Activity : "project"
-  Activity ||--o{ Assignment : "activity"
-  Activity ||--o{ Team : "activity"
-  Activity ||--o{ Warehouse : "activity"
-  Activity ||--o{ DataForm : "activity"
-  Team ||--o{ Assignment : "assignments"
-  Assignment ||--o{ organizationUnit : "organizationUnit"
-  User ||--o{ Team : "userInfo"
-
-  ProjectManagement
-  UserManagement
-  DataCollection
-  Reporting
-  FileService
+- **Backend Services:**  
+  - **Spring Boot API:** Connects to both PostgreSQL (for metadata) and MongoDB (for dynamic data) and utilizes Redis for caching.
+  - **Authentication:** Managed by Keycloak, ensuring secure role-based access.
   
- 
-```
+- **Integrations:**  
+  - Supports formats like ODK, RESTful API integrations (e.g., PowerBI, DHIS2), and webhooks for seamless interoperability.
+  
+- **Security:**  
+  - Implements TLS 1.3 for secure communications.
+  - Employs an audit service to log and monitor all user interactions.
 
-**ITNs Campaign Graph**
-
-ITNsCampaignsDB Graph Diagram:
-
-```mermaid
-graph TD;
-  itnsdistributionreport -->|vcode FK|villages
-  itnsdistributionreport -->|team_id FK|distributionteams
-  itnsdistributionreport -->|dayid FK|campaigndays
-  villages -->|districtcode FK|district
-  villagetargetinfo -->|villagecode FK|villages
-  villagetargetinfo -->|orid FK|followupteam
-  villagetargetinfo -->|teamid FK|distributionteams
-  villagetargetinfo -->|whid FK|whinfo
-  villagetargetinfo -->|planneddayid FK|campaigndays
-  whinventory -->|whid FK|whinfo
-  whitnsmovementtoteamsreports -->|teamid FK|distributionteams
-  whitnsmovementtoteamsreports -->|wh FK|whinfo
-  whitnsmovementtoteamsreports -->|dayofmovementid FK|campaigndays
-
-```
-
-### Deeper Dive into ITNs Projec workflow ERD
-
-ITNsCampaignsDB ERD Diagram:
+**Architecture Diagram:**
 
 ```mermaid
-erDiagram
-  Campaigndays ||--o{ Itnsdistributionreport : "day distributed"
-  Campaigndays ||--o{ Villagetargetinfo : "day planned"
-  Campaigndays ||--o{ Whitnsmovementtoteamsreports : "day of movement"
-  Campaigndays {
-    int day_id PK
-    string daylabel
-    string dayar
-    timestamp daydate
-  }
+flowchart TD
+    subgraph Mobile App
+        MA[Mobile Client] -->|HTTPS| API
+        MA -->|Offline Sync| LS[(SQLite\nEncrypted)]
+        LS -->|AES-256| MA
+    end
 
-  Distributionteams ||--o{ Itnsdistributionreport : "sends reports"
-  Distributionteams ||--o{ Villagetargetinfo : "targets villages"
-  Distributionteams ||--o{ Whitnsmovementtoteamsreports : "receives itns"
-  Distributionteams {
-    int teamid PK
-    string teamleader
-    int orid
-  }
+    subgraph Backend
+        API[Spring Boot API] --> PG[(PostgreSQL\nMetadata)]
+        API --> MG[(MongoDB\nDynamic Data)]
+        API --> Cache[(Redis\nCaching)]
+        API --> Auth[Keycloak]
+    end
 
-  District ||--o{ Villages : "admin level of"
-  District {
-    int district_id_nmcp PK
-    int gov_id
-    string gov_en
-    string district_en
-  }
+    subgraph Integrations
+        API -->|ODK Format| KoBoToolbox
+        API -->|Analysis Format| AnalysisService
+        API -->|REST| PowerBI
+        API -->|Webhooks| Other/DHIS2..
+    end
 
-  progressMonitoringTeam ||--o{ Villagetargetinfo : "monitoring progress of"
-  progressMonitoringTeam {
-    string orname
-    int orid PK
-  }
-
-  Itnsdistributionreport {
-
-    string _uuid PK
-    int team_id FK
-    float _location_latitude
-    float _location_longitude
-    int vcode FK
-    string distributionstatus
-    int population
-    int itns_distributed
-    timestamp _submission_time
-    timestamp entry_started
-    timestamp entry_finished
-    string settlementtype ""
-    int dayid FK
-  }
-
-  Villages ||--o{ Itnsdistributionreport : "distribution reports"
-  Villages ||--o{ Villagetargetinfo : "planned info"
-  Villages {
-    int villagecode PK
-    int districtcode
-    string subdistrict
-    string village
-    float longitude
-    float latitude
-    float elevation
-  }
-
-  Villagetargetinfo {
-    int villagecode PK
-    int whid FK
-    int teamid FK
-    int planned_day_id FK
-    float population
-    float itns
-    int orid FK
-  }
-
-  Whinfo ||--o{ Whitnsmovementtoteamsreports : "movement reports"
-  Whinfo ||--o{ Villagetargetinfo : "contains the planned quantity of"
-  Whinfo {
-    int whid PK
-    string whname
-    float itnsbeginningbalance
-  }
-
-  Whitnsmovementtoteamsreports {
-    int wh FK
-    int movement_day_id FK
-    int teamid FK
-    int receiveditns
-    string _submission__uuid PK
-    timestamp _submission__submission_time
-  }
-
+    subgraph Security
+        Auth -->|OAuth2| MA
+        TLS[TLS 1.3] --> API
+        Audit[Audit Service] --> PG
+    end
 ```
 
-**Data Flow and Tracking:**
+### 2.3 System Objectives
 
-* **Campaign Planning:** `Campaigndays` define the campaign's timeline, while `Villagetargetinfo` captures planned ITN distribution for each village on specific days. This allows for precise planning and resource allocation.
-* **Distribution Execution:** `Distributionteams` assigned to villages update `Itnsdistributionreport` with real-time data on distribution progress, including location details, population served, ITNs distributed, and status updates. This ensures transparency and accountability.
-* **Monitoring and Evaluation:** `progressMonitoringTeam` tracks progress against targets through `Villagetargetinfo` and `Itnsdistributionreport` data. This enables timely interventions and adjustments to optimize campaign effectiveness.
-* **Inventory Management:** `Whinfo` and `Whinventory` track ITN movement from warehouses to teams via `Whitnsmovementtoteamsreports`. This ensures accurate inventory control and prevents stockouts.
+DataRun is engineered to:
 
-**Data Analysis and Insights:**
+- **Enhance Data Management:** Streamline the collection, processing, and storage of NMCP-related data.
+- **Support Informed Decision-Making:** Provide robust tools and reports for effective malaria control and prevention.
+- **Enable Field Data Collection:** Allow offline data collection in remote areas with later synchronization.
+- **Ensure Data Integrity:** Maintain strict data quality and traceability standards.
+- **Improve Intervention Planning:** Leverage reusability of activity data to optimize cost and planning efficiency.
 
-By combining data from various entities, the system can generate valuable insights:
+### 2.4 Key Features
 
-* **Performance analysis:** Track ITN distribution progress across teams, districts, and villages, identifying areas requiring support or adjustments.
-* **Efficiency evaluation:** Analyze time taken for ITN delivery, identify logistical bottlenecks, and optimize distribution routes.
-* **Coverage assessment:** Ensure all target villages receive ITNs within the planned timeframe, minimizing missed populations.
-* **Resource allocation:** Allocate resources like personnel and transportation efficiently based on real-time needs and progress data.
+- **Project Management:**  
+  - Capture departmental efforts as distinct projects (e.g., ITNs distribution, larvicide campaigns).
 
-**Additional info about key entities:**
+- **Field Activities:**  
+  - Target entities such as locations, health facilities, or individuals.
+  - Manage tasks like team supervision, resource distribution, and data collection.
 
-**Itnsdistributionreport:** This central entity serves as the treasure trove of campaign data, capturing crucial details about each ITN distribution instance. The `distributionstatus` provides an update on the progress (e.g., completed, pending), while `population` and `itns_distributed` figures quantify the impact. The `_submission_time` records the timing of data entry, and settlement type offers additional context when the report is about a refugee gathering in the distribution site.
+- **Assignments & Tracking:**  
+  - Link activities with teams, organizational units, and scheduling.
+  - Use reference forms to track locations and resource allocations.
 
-**Villagetargetinfo:** This entity bridges the gap between villages and distribution plans. Each village record (villagecode) links to planned distribution details like the assigned warehouse (whid), responsible team (teamid), and planned distribution day (planneddayid). Target population and ITN figures (population and itns) guide resource allocation.
+- **Dynamic Data Forms:**  
+  - Create customizable data collection forms to capture relevant, activity-specific data.
+  - Support offline data entry with subsequent synchronization.
 
-**Whitnsmovementtoteamsreports:** These reports capture the daily flow of ITNs from warehouses to distribution teams. Each report is uniquely identified by the involved warehouse (wh), day of movement (dayofmovementid), team (teamid). The `receiveditns` figures track the quantity of ITNs transferred, providing valuable insights into distribution efficiency and potential discrepancies. Finally, the submission details (_submission__uuid and_submission__submission_time) ensure data provenance and traceability.
+- **Data Visualization:**  
+  - Generate pivot tables, charts, and dashboards for effective data analysis and reporting.
 
-**Warehouses:** We preplan warehouse locations for ITNs and allocate daily quantities needed for villages. Each day, teams retrieve allocated quantities from warehouses, covering villages in their planned path from the `villagetargetinfo` table. At day end, team leaders submit `itnsdistributionreport` for each village, marking it as 'Complete' if finished or 'In Progress' if not completed that day.
+- **Interoperability:**  
+  - Open API architecture allows easy integration with platforms such as DHIS2, ODK, HRMS, LMIS, and supply chain systems.
 
-**Overall, this DB structure facilitates the analysis of various aspects of the campaign, enabling data-driven decision making. We can:**
+---
 
-* Identify teams or villages requiring additional support based on distribution performance.
-* Analyze factors affecting distribution status and adjust strategies accordingly.
-* Monitor progress against targets and make informed adjustments to campaign goals.
-* Optimize resource allocation based on real-time data on team performance and inventory levels.
+## 3. Mobile & Data Collection
 
-## Data-Run-Mobile
+### 3.1 Dynamic Data Collection Forms
 
-### Overview
+- **Form Templates:**  
+  - Support multiple field types (e.g., integer, date, entity references).
+  - Customizable for specific activities and team assignments.
 
-Data-Run-Mobile is a Flutter application developed for the National Malaria Control Program (NMCP)
-in Yemen. The app facilitates the submission and synchronization of malaria-related data with the
-main backend system, Data-run-Api. This tool is designed to streamline data collection processes and
-ensure accurate and timely data transmission to support malaria control efforts.
+### 3.2 Mobile-First Design
 
-### Features
+- **Offline-First Functionality:**  
+  - Allow form completion without connectivity; sync data when online.
+  
+- **User Modes:**  
+  - **Supervisors:** Access real-time summaries and transaction histories.
+  - **Field Users:** seamless data entry with dynamic form rendering.
+  
+- **Key Technologies:**  
+  - **SQLite:** For secure, local storage (AES-256 encryption).
+  - **WorkManager:** For scheduling background sync tasks.
+  - **Conflict Resolution:** Configurable mechanisms (e.g., last-write-win, server-win) with versioning.
 
-- **Dynamic Form Download**: The app downloads forms designed on the backend, which can include
-  various question types.
-- **Question Types**: Supports Text, Number, Date, Multi Answer, Single Answer, Image, and File
-  questions.
-- **Data Submission**: Users can submit various malaria-related data directly from the app.
-- **Data Synchronization**: The app syncs submitted data with the Data-run-Api, ensuring all
-  information is up-to-date.
-- **User Authentication**: Secure login and authentication to ensure data integrity and privacy.
-- **User Management**: Quickly create users and assign them to particular teams.
-- **Offline Mode**: Allows data entry even when offline; data will be synced once the internet
-  connection is restored.
-- **User-Friendly Interface**: Simple and intuitive design to facilitate ease of use by healthcare
-  workers.
--
+### 3.3 Data Flow
 
-### Screenshots
+```mermaid
+sequenceDiagram
+    participant Field Worker
+    participant Mobile App
+    participant API
+    participant PostgreSQL
+    participant MongoDB
 
-# Project Name
+    Field Worker->>Mobile App: Collects data (offline)
+    Mobile App->>Mobile App: Encrypts with SQLCipher
+    loop Periodic Sync
+        Mobile App->>API: JWT Auth
+        API->>Keycloak: Validate Token
+        Mobile App->>API: Batch submissions
+        API->>MongoDB: Write submissions
+        API->>PostgreSQL: Update assignments
+        API-->>Mobile App: Sync confirmation
+    end
 
-## Screenshots
+    Supervisor->>API: GET /assignments
+    API->>PostgreSQL: Query teams
+    API->>MongoDB: Aggregate data
+    API-->>Supervisor: Combined JSON
+```
 
-| ![1](screenshots/1.png) | ![2](screenshots/2.png) | ![3](screenshots/3.png) |
-| ----------------------- | ----------------------- |-------------------------|
-| ![4](screenshots/4.png) | ![5](screenshots/5.png) | ![6](screenshots/6.png) |
-| ![7](screenshots/7.png) | ![8](screenshots/8.png) | ![9](screenshots/9.jpg) |
-| ![10](screenshots/10.png) | ![11](screenshots/11.png) |                         |
+---
 
+## 4. Backend Architecture
 
-### Usage
+### 4.1 Hybrid Database Setup
 
-1. **Login**: Enter your credentials to access the app.
-2. **Download Forms**: Navigate to the forms section to download the latest forms from the backend.
-3. **Data Entry**: Fill out the forms with the required data. The forms can include various types of
-   questions:
-    - **Text**: Enter textual information.
-    - **Number**: Enter numerical data.
-    - **Date**: Select dates from a date picker.
-    - **Multi Answer**: Select multiple options from a list.
-    - **Single Answer**: Select one option from a list.
-    - **Image**: Capture or upload images.
-    - **File**: Upload files.
-4. **User Management**: Create users and assign them to specific teams.
-5. **Sync Data**: Ensure your device is connected to the internet and use the sync feature to upload
-   data to the Data-run-Api.
-6. **View and Edit Submissions**: Check previous submissions and their sync status.
+DataRun utilizes a hybrid database approach:
 
-### Sample Form:
+- **PostgreSQL:**  
+  - Manages structured metadata (users, teams, assignments, organizational units).
+  
+- **MongoDB:**  
+  - Stores dynamic data including forms, submissions, and rapidly evolving entities.
 
-A sample of the form returned from the API end point:
+```plaintext
+                 +---------------------+
+                 |   Spring Boot API   |
+                 +----------+----------+
+                            |
+           +----------------+-----------------+
+           |                                  |
++----------+----------+             +---------+----------+
+| PostgreSQL (RDBMS)  |             | MongoDB (NoSQL)    |
+| - Users             |             | - Data Forms       |
+| - Teams             |             | - Submissions      |
+| - Assignments       |             | - Dynamic Entities |
+| - OrgUnits          |             | - ... Other        |
+| - ...Other          |             +--------------------+
++---------------------+
+```
 
-```json
-{
-  "paging": true,
-  "page": 0,
-  "pageCount": 1,
-  "total": 4,
-  "pageSize": 20,
-  "dataForms": [
-    {
-      "createdBy": "admin",
-      "createdDate": "2024-08-05T02:37:40.535Z",
-      "lastModifiedBy": "admin",
-      "lastModifiedDate": "2024-08-05T02:37:40.535Z",
-      "id": "66b03af41327d612461a6aac",
-      "uid": "KcsA3KETRbY",
-      "code": "CHV_PATIENTS_FORM",
-      "displayName": "CHV cases registering form",
-      "disabled": false,
-      "activity": "oBne891mA9n",
-      "version": 9,
-      "defaultLocal": "en",
-      "label": {
-        "en": "CHV cases registering form",
-        "ar": "تسجيل حالات chv"
-      },
-      "fields": [
-        {
-          "uid": "qR5sT6uV7W8",
-          "code": null,
-          "name": "locationName",
-          "description": null,
-          "type": "Text",
-          "mandatory": true,
-          "mainField": true,
-          "rules": [
-          ],
-          "listName": null,
-          "label": {
-            "en": "Village Name",
-            "ar": "اسم القرية"
-          }
-        },
-        {
-          "uid": "cD7eF8gH9I0",
-          "code": null,
-          "name": "name",
-          "description": "Name of the patient",
-          "type": "Text",
-          "mandatory": true,
-          "mainField": true,
-          "rules": [
-            {
-              "uid": "eF6676iJ5K6",
-              "field": "name",
-              "expression": "name.length >= 9",
-              "action": "Error",
-              "message": {
-                "en": "Name is not complete",
-                "ar": "ادخل الاسم الرباعي"
-              },
-              "filterInfo": null
-            }
-          ],
-          "listName": null,
-          "label": {
-            "en": "Patient name",
-            "ar": "اسم المريض"
-          }
-        },
-        {
-          "uid": "vW3xY4zA5B6",
-          "code": null,
-          "name": "visitDate",
-          "description": null,
-          "type": "Date",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-          ],
-          "listName": null,
-          "label": {
-            "en": "Visit Date",
-            "ar": "تاريخ الزيارة"
-          }
-        },
-        {
-          "uid": "jK1lM2nO3P4",
-          "code": null,
-          "name": "age",
-          "description": "Age in Years and (months for age less than 1 year)",
-          "type": "Age",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-            {
-              "uid": "eF66H6iJ5K6",
-              "field": "age",
-              "expression": "age <= 0 || age > 100",
-              "action": "Error",
-              "message": {
-                "en": "Age is greater than normal",
-                "ar": "العمر كبير جدا تأكد"
-              },
-              "filterInfo": null
-            }
-          ],
-          "listName": null,
-          "label": {
-            "en": "Age",
-            "ar": "العمر"
-          }
-        },
-        {
-          "uid": "xY9zA0bC1D2",
-          "code": null,
-          "name": "gender",
-          "description": null,
-          "type": "SelectOne",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-          ],
-          "listName": "genders",
-          "label": {
-            "en": "Gender",
-            "ar": "الجنس"
-          }
-        },
-        {
-          "uid": "eF3gH4iJ5K6",
-          "code": null,
-          "name": "pregnant",
-          "description": null,
-          "type": "Boolean",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-            {
-              "uid": "eF5gH6iJ5K6",
-              "field": "pregnant",
-              "expression": "gender == 'FEMALE' && age >= 14",
-              "action": "Show",
-              "message": null,
-              "filterInfo": null
-            }
-          ],
-          "listName": null,
-          "label": {
-            "en": "Is pregnant?",
-            "ar": "هل هي حامل؟"
-          }
-        },
-        {
-          "uid": "lM7nO8pQ9R0",
-          "code": null,
-          "name": "testResult",
-          "description": null,
-          "type": "SelectOne",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-          ],
-          "listName": "testResults",
-          "label": {
-            "en": "Test Result",
-            "ar": "نتيجة الفحص"
-          }
-        },
-        {
-          "uid": "z33bC6dE7F8",
-          "code": null,
-          "name": "detectionType",
-          "description": null,
-          "type": "SelectOne",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-            {
-              "uid": "eF3gH8iJ5K9",
-              "field": "detectionType",
-              "expression": "testResult == 'PF' || testResult == 'PV' || testResult == 'MIX'",
-              "action": "Show",
-              "message": null,
-              "filterInfo": null
-            }
-          ],
-          "listName": "detectionTypes",
-          "label": {
-            "en": "Detection Type",
-            "ar": "نوع الاكتشاف"
-          }
-        },
-        {
-          "uid": "zA5bDDdE7F8",
-          "code": null,
-          "name": "severity",
-          "description": null,
-          "type": "SelectOne",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-            {
-              "uid": "eF9gH8iJ5K9",
-              "field": "severity",
-              "expression": "testResult == 'PF' || testResult == 'PV' || testResult == 'MIX'",
-              "action": "Show",
-              "message": null,
-              "filterInfo": null
-            }
-          ],
-          "listName": "severities",
-          "label": {
-            "en": "Severity",
-            "ar": "تصنيف الحالة"
-          }
-        },
-        {
-          "uid": "gH9iJ0kL1M2",
-          "code": null,
-          "name": "treatment",
-          "description": null,
-          "type": "SelectOne",
-          "mandatory": true,
-          "mainField": false,
-          "rules": [
-            {
-              "uid": "gH99J1kL1M2",
-              "field": "treatment",
-              "expression": "pregnant && (testResult == 'PF' || testResult == 'PV' || testResult == 'MIX')",
-              "action": "Filter",
-              "message": null,
-              "filterInfo": {
-                "fieldToFilter": "treatment",
-                "optionsToHide": [
-                  "TREATED",
-                  "FIRST_DOSE",
-                  "FIRST_DOSE_REFERRAL"
-                ],
-                "optionsToShow": null
-              }
-            },
-            {
-              "uid": "gH1011kL1M2",
-              "field": "treatment",
-              "expression": "severity == 'SEVERE'",
-              "action": "Filter",
-              "message": null,
-              "filterInfo": {
-                "fieldToFilter": "treatment",
-                "optionsToHide": null,
-                "optionsToShow": [
-                  "FIRST_DOSE_REFERRAL",
-                  "REFERRAL"
-                ]
-              }
-            },
-            {
-              "uid": "gH10J1kL1M2",
-              "field": "treatment",
-              "expression": "testResult == 'PF' || testResult == 'PV' || testResult == 'MIX'",
-              "action": "Show",
-              "message": null,
-              "filterInfo": null
-            }
-          ],
-          "listName": "treatments",
-          "label": {
-            "en": "Treatment",
-            "ar": "تدبير الحالة"
-          }
-        },
-        {
-          "uid": "nO3pQ4rS5T6",
-          "code": null,
-          "name": "comment",
-          "description": null,
-          "type": "LongText",
-          "mandatory": null,
-          "mainField": false,
-          "rules": [
-          ],
-          "listName": null,
-          "label": {
-            "en": "Comments",
-            "ar": "ملاحظات وتعليقات"
-          }
-        }
-      ],
-      "options": [
-        {
-          "uid": "xY1200bC1D2",
-          "form": null,
-          "listName": "genders",
-          "name": "FEMALE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Female",
-            "ar": "أنثى"
-          }
-        },
-        {
-          "uid": "5Y1200dC5D1",
-          "form": null,
-          "listName": "genders",
-          "name": "MALE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Male",
-            "ar": "ذكر"
-          }
-        },
-        {
-          "uid": "688888BC7D1",
-          "form": null,
-          "listName": "testResults",
-          "name": "INVALID",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Invalid",
-            "ar": "غير صالح"
-          }
-        },
-        {
-          "uid": "6Y1288dC5D1",
-          "form": null,
-          "listName": "testResults",
-          "name": "NEGATIVE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Negative",
-            "ar": "سلبي"
-          }
-        },
-        {
-          "uid": "6Y3338dC5D1",
-          "form": null,
-          "listName": "testResults",
-          "name": "PF",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Plasmodium falciparum",
-            "ar": "بلاسموديوم فالسيباروم"
-          }
-        },
-        {
-          "uid": "10CDF77C7D1",
-          "form": null,
-          "listName": "detectionTypes",
-          "name": "ACTIVE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Active",
-            "ar": "بحث نشط"
-          }
-        },
-        {
-          "uid": "555288dC5D1",
-          "form": null,
-          "listName": "testResults",
-          "name": "PV",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Plasmodium vivax",
-            "ar": "بلاسموديوم فيفاكس"
-          }
-        },
-        {
-          "uid": "1CD8FEBC7D1",
-          "form": null,
-          "listName": "treatments",
-          "name": "TREATED",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Treated",
-            "ar": "معالج"
-          }
-        },
-        {
-          "uid": "10CDF8BC7D1",
-          "form": null,
-          "listName": "severities",
-          "name": "SEVERE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Severe",
-            "ar": "وخيمة"
-          }
-        },
-        {
-          "uid": "9CC8F8BC7D1",
-          "form": null,
-          "listName": "severities",
-          "name": "SIMPLE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Simple",
-            "ar": "بسيطة"
-          }
-        },
-        {
-          "uid": "666288dC5D1",
-          "form": null,
-          "listName": "testResults",
-          "name": "MIX",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Mixed",
-            "ar": "مختلط"
-          }
-        },
-        {
-          "uid": "9CC8F66C7D1",
-          "form": null,
-          "listName": "detectionTypes",
-          "name": "REACTIVE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Reactive",
-            "ar": "زيارة روتينية"
-          }
-        },
-        {
-          "uid": "ECDYFEBC8D1",
-          "form": null,
-          "listName": "treatments",
-          "name": "FIRST_DOSE",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "First Dose",
-            "ar": "الجرعة الأولى"
-          }
-        },
-        {
-          "uid": "ECDYF9628D1",
-          "form": null,
-          "listName": "treatments",
-          "name": "FIRST_DOSE_REFERRAL",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "First Dose & Referral",
-            "ar": "الجرعة الأولى وإحالة"
-          }
-        },
-        {
-          "uid": "9RD8FEFC7D0",
-          "form": null,
-          "listName": "treatments",
-          "name": "REFERRAL",
-          "description": null,
-          "order": 0,
-          "label": {
-            "en": "Referral",
-            "ar": "إحالة"
-          }
-        }
-      ],
-      "orgUnits": [
-        "...",
-        "..."
-      ]
-    }
+### 4.2 Advanced API Capabilities
+
+#### Hybrid Query Engine
+
+The engine supports advanced querying with virtual joins across PostgreSQL and MongoDB, enhanced by a Redis caching layer.
+
+**Example API Query:**
+
+```http
+GET /api/v1/dataSubmissions?query={
+  "$and": [
+    {"assignment.region": "Aden"}, 
+    {"submissionDate": {"$gte": "2023-10-01"}},
+    {"status": "approved"}
   ]
-}
-
+}&fields=["team.id","items.count"]&page=2&size=50
 ```
-### Contributing
 
-We welcome contributions to enhance Data-Run-Mobile. Please follow these steps:
+**Engine Execution Flow:**
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a pull request.
+```mermaid
+flowchart TD
+    REQ[API Request] --> Parser
+    Parser -->|Extract Filters| QE[Query Engine]
+    QE -->|SQL| PG[PostgreSQL]
+    QE -->|MQL| MG[MongoDB]
+    PG -->|JDBC| Combiner
+    MG -->|Mongo Driver| Combiner
+    Combiner -->|Normalize| Formatter
+    Formatter -->|JSON:API| RESP[Response]
+```
 
-## License
+---
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## 5. Security and Compliance
+
+### 5.1 Security Measures
+
+- **End-to-End Encryption:**  
+  - Encrypts data in transit (TLS 1.3 with certificate pinning) and at rest (SQLCipher, AES-256-XTS).
+  
+- **Authentication & RBAC:**  
+  - OAuth2 with Keycloak ensures secure, role-based access control.
+  
+- **Audit Trails:**  
+  - Comprehensive logging using PostgreSQL Audit Extensions for immutable record keeping.
+
+### 5.2 Security Architecture
+
+```mermaid
+flowchart LR
+    subgraph Data_Layer
+        PG[(PostgreSQL)] -->|TDE\nAES-256| DISK
+        MG[(MongoDB)] -->|Encrypted FS| DISK
+    end
+
+    subgraph Network_Layer
+        WAF[Web Application Firewall] --> API
+        API -->|Mutual TLS| SERVICES
+    end
+
+    subgraph Access_Control
+        USER[Field Worker] -->|Biometric Auth| MA[Mobile]
+        MA -->|Cert Pinning| API
+        API --> RBAC[Role-Based Access]
+        RBAC --> POLICY["JSON Policy:
+            {
+              'malaria:write': ['team-leader'],
+              'itn:delete': ['admin']
+            }"]
+    end
+
+    subgraph Monitoring
+        AUDIT[Audit Logs] -->|PgAudit| PG
+        WAF -->|SIEM Integration| SPLUNK
+    end
+```
+
+**Compliance Standards:**
+
+- Yemeni Ministry of Health Privacy Guidelines
+- WHO Malaria Data Standards
+
+---
+
+## 6. Use Case: ITNs Distribution Campaign
+
+**Workflow Overview:**
+
+1. **Central Warehouse:**  
+   - Allocate 10,000 nets.
+   - Create assignments:
+     - **Team A:** 5,000 nets.
+     - **Team B:** 5,000 nets.
+
+2. **Field Operations:**  
+   - Field teams scan QR codes.
+   - Submit distribution forms capturing:
+     - Nets received (5,000)
+     - Nets distributed (e.g., 4,872)
+     - GPS verification (e.g., -12.3, 44.5)
+
+3. **Dashboard Reporting:**  
+   - Real-time dashboards indicate 97.4% coverage.
+   - Automatic flagging of discrepancies greater than 2%.
+
+**Roles:**
+
+- **Supervisor:**  
+  - Registers daily resource movements.
+  - Accesses real-time summaries and detailed logs.
+  
+- **Field Team:**  
+  - Receives assignments based on planned distributions.
+  - Uses dynamic forms for data entry (both offline and online).
+
+---
+
+## 7. Implementation Roadmap
+
+### 7.1 Summary of Key Strengths
+
+- **Comprehensive Data Management:**  
+  - Dynamic data collection paired with robust backend analytics.
+- **Flexible Integration:**  
+  - Open API enabling seamless connectivity with other systems.
+- **Enhanced Data Security:**  
+  - End-to-end encryption and detailed audit trails ensuring compliance.
+
+### 7.2 Next Steps
+
+- **Pilot Deployment:**  
+  - Roll out DataRun in one department and gather stakeholder feedback.
+  
+- **Iterative Improvement:**  
+  - Use pilot insights to further customize and scale the solution.
+
+**Implementation Timeline:**
+
+```mermaid
+gantt
+    title Deployment Phases
+    dateFormat  YYYY-MM-DD
+    section Phase 1
+    Training       :2024-08-01, 30d
+    Larvicide Campaign   :2024-09-22, 6d
+    ITNs Campaign   :2024-11-12, 18d
+    section Phase 2
+    Training  :2025-04-01, 120d
+    ICCM Rollout  :2025-04-01, 60d
+    1000 HFs LMIS Rollout :2025-05-01, 90d
+```
+
+**Resource Requirements:**
+
+- NMCP Technical Working Group Training  
+- Field Coordinator Training
+---
+
+## 9. Visual Interfaces
+
+### 9.1 Activities and User Management
+
+- **Activities Management:**  
+  ![Activity's Teams Management](https://github.com/user-attachments/assets/9baf66a4-988b-495f-a69f-6d96160fe55b)
+
+- **Teams Management:**  
+  ![Teams Management Screen](https://github.com/user-attachments/assets/0aded21b-09c4-4cc2-892b-7485032b5e59)
+
+- **User Management:**  
+  ![User Management](https://github.com/user-attachments/assets/8ab94341-f13d-471a-89af-e7641f430d53)
+
+### 9.2 Form Templates and Elements
+
+- **Data Elements Management:**  
+  ![Data Elements Management](https://github.com/user-attachments/assets/bf0529c4-aca1-4090-a365-fff7d06849f3)  
+  ![Data Elements Definitions](https://github.com/user-attachments/assets/4f15825b-a388-4477-873f-71afdac3af71)
+
+- **Options and OptionSets:**  
+  ![Options Management](https://github.com/user-attachments/assets/0453a54a-be2e-4c21-b578-61fdd45790ad)  
+  ![OptionSets Definitions](https://github.com/user-attachments/assets/4d0e80ab-850f-46ca-91a2-21582e5035b0)
+
+### 9.3 Form Template Builder
+
+- **Main Screen:**  
+  ![Form Template Builder Main Screen](https://github.com/user-attachments/assets/638e9ce4-09a1-4c02-8f74-35492a92dd4d)
+
+- **Template Management:**  
+  ![Form Template Management](https://github.com/user-attachments/assets/b76ba1da-23c0-4df8-ad9b-8856cf55b009)
+
+- **Sections & Data Elements Selection:**  
+  ![Sections Management](https://github.com/user-attachments/assets/eef9a064-4180-4d37-aa54-7e246919c31b)  
+  ![Data Elements Selection](https://github.com/user-attachments/assets/9548c59e-f4a3-45db-9e4e-e197ecac6335)
+
+- **Rules and Expressions:**  
+  ![Rules Definition Screen](https://github.com/user-attachments/assets/aa602eb0-ea7e-4c21-a9de-8d1311209d4a)  
+  ![Rules Expressions](https://github.com/user-attachments/assets/b49f0ccb-afea-4237-b1f1-b818e083a755)
