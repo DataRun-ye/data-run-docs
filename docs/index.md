@@ -419,6 +419,23 @@ gantt
   ![Rules Expressions](https://github.com/user-attachments/assets/b49f0ccb-afea-4237-b1f1-b818e083a755)
 
 ## 9.2 Mobile App
+Datarun-Mobile's app is developed with dart (Flutter). The app facilitates the submission and synchronization of malaria-related data with the
+main backend system.
+
+## Features
+
+- **Dynamic Form Download**: The app downloads forms designed on the backend, which can include
+  various question types.
+- **Question Types**: Supports Text, Number, Date, Multi Answer, Single Answer, Image, and File
+  questions.
+- **Data Submission**: Users can submit various malaria-related data directly from the app.
+- **Data Synchronization**: The app syncs submitted data with the Data-run-Api, ensuring all
+  information is up-to-date.
+- **User Authentication**: Secure login and authentication to ensure data integrity and privacy.
+- **User Management**: Quickly create users and assign them to particular teams.
+  connection is restored.
+- **User-Friendly Interface**: Simple and intuitive design to facilitate ease of use by healthcare
+  workers.
 
 ### 9.2.1 Assignment/task's card:
 
