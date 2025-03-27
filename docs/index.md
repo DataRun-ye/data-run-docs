@@ -313,28 +313,46 @@ flowchart LR
   - Receives assignments based on planned distributions.
   - Uses dynamic forms for data entry (both offline and online).
 
+- **Inventory Reports and Online Management**  
+Inventory reports can be configured to be managed online/offline. e.g. When WH operations are configured to be Online operations, it ensures quantities are handled directly and accurately, without discrepancies or errors.  
+
+Key functionalities include:  
+1. **Stock Issuance and Returns**:  
+   - A team can issue items from their assigned inventory and return them later.  
+   - Stock transfers can occur between teams or between warehouses.  
+
+2. **Restrictions on Inventory Use**:  
+   - Teams can only issue items if there’s sufficient stock available (configurable).  
+   - If a team issues stock to another warehouse, the receiving warehouse's stock must increase accordingly.  
+
+3. **Offline Discrepancy Handling**:  
+   - If stock movement occurs while a team is offline (per configuration) (e.g., a team issues stock but doesn’t have connectivity), the operations team can manually reconcile the discrepancy.  
+
+---
+
+### **Configuration decisions fo Supervisor Role**  
+Supervisors can:  
+1. **Access Team Reports and Summaries**:  
+   - Supervisors can view historical reports such as village updates, inventory changes, or any team activities. These reports are organized chronologically, much like a bank statement.  
+
+2. **Reassign Villages Between Teams**:  
+   - If a team is unable to cover a village or if another team covers it instead, supervisors can reassign the village from the first team to the second.  
+   - Once reassigned, the new team will see the task as **overdue** and must submit the required report promptly.  
+
+3. **Manage Same-Day Tasks**:  
+   - Villages scheduled for the current day must be addressed on the same day.  
+   - If a village needs to be postponed, supervisors must **reschedule it for another day** and specify the new date.  
+
+### **System Workflow and Automation**  
+- The system ensures that every campaign or operation ends with complete and accurate reports for all assigned villages.  
+- Each village has a detailed history, showing:  
+  - How it started.  
+  - The team initially responsible.  
+  - Any reassignment history (whether by date or between teams).  
 ---
 
 ## 7. Implementation Roadmap
-
-### 7.1 Summary of Key Strengths
-
-- **Comprehensive Data Management:**  
-  - Dynamic data collection paired with robust backend analytics.
-- **Flexible Integration:**  
-  - Open API enabling seamless connectivity with other systems.
-- **Enhanced Data Security:**  
-  - End-to-end encryption and detailed audit trails ensuring compliance.
-
-### 7.2 Next Steps
-
-- **Pilot Deployment:**  
-  - Roll out DataRun in one department and gather stakeholder feedback.
-  
-- **Iterative Improvement:**  
-  - Use pilot insights to further customize and scale the solution.
-
-**Implementation Timeline:**
+**Timeline:**
 
 ```mermaid
 gantt
