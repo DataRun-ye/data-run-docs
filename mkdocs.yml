@@ -3,13 +3,13 @@ site_name: NMCP Yemen Info System Docs
 site_author: Hamza
 repo_name: NMCP-YE Datarun Docs
 repo_url: https://github.com/DataRun-ye/data-run-docs
-edit_uri: edit/main/docs/
+# edit_uri: edit/main/docs/
 theme:
   # name: readthedocs
   name: material
   features:
     - announce.dismiss
-    - content.action.edit
+    # - content.action.edit
     # - content.action.view
     - content.code.annotate
     # - content.code.copy
