@@ -355,10 +355,10 @@ gantt
 - NMCP Technical Working Group Training  
 - Field Coordinator Training
 ---
+# 9. User Interface
+## 9.1 Desktop Interfaces
 
-## 9. Visual Interfaces
-
-### 9.1 Activities and User Management
+### 9.1.1 Activities and User Management
 
 - **Activities Management:**  
   ![Activity's Teams Management](https://github.com/user-attachments/assets/9baf66a4-988b-495f-a69f-6d96160fe55b)
@@ -369,7 +369,7 @@ gantt
 - **User Management:**  
   ![User Management](https://github.com/user-attachments/assets/8ab94341-f13d-471a-89af-e7641f430d53)
 
-### 9.2 Form Templates and Elements
+### 9.1.2 Form Templates and Elements
 
 - **Data Elements Management:**  
   ![Data Elements Management](https://github.com/user-attachments/assets/bf0529c4-aca1-4090-a365-fff7d06849f3)  
@@ -379,7 +379,7 @@ gantt
   ![Options Management](https://github.com/user-attachments/assets/0453a54a-be2e-4c21-b578-61fdd45790ad)  
   ![OptionSets Definitions](https://github.com/user-attachments/assets/4d0e80ab-850f-46ca-91a2-21582e5035b0)
 
-### 9.3 Form Template Builder
+### 9.1.3 Form Template Builder
 
 - **Main Screen:**  
   ![Form Template Builder Main Screen](https://github.com/user-attachments/assets/638e9ce4-09a1-4c02-8f74-35492a92dd4d)
@@ -394,3 +394,16 @@ gantt
 - **Rules and Expressions:**  
   ![Rules Definition Screen](https://github.com/user-attachments/assets/aa602eb0-ea7e-4c21-a9de-8d1311209d4a)  
   ![Rules Expressions](https://github.com/user-attachments/assets/b49f0ccb-afea-4237-b1f1-b818e083a755)
+
+## 9.2 Mobile App
+
+### 9.2.1 Assignment/task's card:
+
+| ![1](https://github.com/user-attachments/assets/e16f955c-e9c8-4633-b280-3ae52403f945)   | ![2](https://github.com/user-attachments/assets/9b4b9d96-180a-4e75-9c32-ce00588401a5)  |
+
+### 9.2.2 V1.0.0 App interfaces
+
+| ![activity landing page](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/001.png)   | ![2](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/002.png)  | ![3](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/003.png)   |
+|---------------------------|--------------------------|---------------------------|
+| ![4](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/004.png)   | ![5](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/005.png)  | ![6](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/006.png)   |
+| ![7](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/007.png)   | ![8](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/008.png)  | ![9](https://raw.githubusercontent.com/Hamza-ye/images-uploads/refs/heads/main/v1.0.2-assets/screenshots/009.png)   |
