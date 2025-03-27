@@ -319,16 +319,14 @@ gantt
 ### 9.1.2 Form Templates and Elements
 
 - **Data Elements Management:**  
-
-  | ![1](screenshots/data_element_1.jpg) | ![2](screenshots/data_element_2.jpg) |  |
-  | ----------------------- | ----------------------- |-------------------------|
-  | **Data Elements Management Screen** | **Data Element Definition Creation** |  |
+  ![1](screenshots/data_element_1.jpg)
+  
+  ![2](screenshots/data_element_2.jpg)
 
 - **Options and OptionSets:**  
-  
-  | ![Options Management](screenshots/Options_OptionSet_management_and_definitions_1.jpg) | ![OptionSets Definitions](screenshots/Options_OptionSet_management_and_definitions_2.jpg) |  |
-  | ----------------------- | ----------------------- |-------------------------|
-  | **Options Management Screen**  | **OptionSets Definition Creation** |  |
+  ![Options Management](screenshots/Options_OptionSet_management_and_definitions_1.jpg)
+
+  ![OptionSets Definitions](screenshots/Options_OptionSet_management_and_definitions_2.jpg)
 
 ### 9.1.3 Form Template Builder
 
@@ -339,15 +337,13 @@ gantt
   ![Form Template Management](screenshots/form_templates_builder_form_template_definition_screen.jpg)
 
 - **Sections & Data Elements Selection:**  
-  
-  | ![Sections Management](screenshots/form_templates_builder_sections_management_definition.jpg)   | ![Data Elements Selection](screenshots/form_templates_builder_dataelements_selection.jpg) |  |
-  | ----------------------- | ----------------------- |-------------------------|
-  | **Sections Management** | **Data Elements Selection** |  |
+  ![Sections Management](screenshots/form_templates_builder_sections_management_definition.jpg)
+  ![Data Elements Selection](screenshots/form_templates_builder_dataelements_selection.jpg)
+
 
 - **Rules and Expressions:**  
- | ![Rules Definition Screen](screenshots/form_templates_builder_rules_definition_screen.jpg)    | ![Rules Expressions](screenshots/form_templates_builder_rules_expressions.jpg) |  |
-  | ----------------------- | ----------------------- |-------------------------|
-  | **Rules Definition Screen** | **Rules Expressions** |  |
+  ![Rules Definition Screen](screenshots/form_templates_builder_rules_definition_screen.jpg)
+  ![Rules Expressions](screenshots/form_templates_builder_rules_expressions.jpg)
 
 ## 9.2 Mobile App
 Datarun-Mobile's app was developed with dart (Flutter). The app facilitates the submission and synchronization of malaria-related data with the
