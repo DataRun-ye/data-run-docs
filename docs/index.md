@@ -350,10 +350,11 @@ Supervisors can:
   - The team initially responsible.  
   - Any reassignment history (whether by date or between teams).  
 
-## 7. Use Case:
+## 7. Other Use Cases:
+Datarun can be configured to manage most NMCP activities workflows, such as:
 - Routine Data for health facilities malaria cases, submitted or linked to external system such as `EIdews`.
 - ICCM data, routine data submission from community volunteers, supervision visit data...etc
-- Un-restricted other configurable use cases's workflows.
+- other workflow per need.
 ---
 
 ## 7. Implementation Roadmap
